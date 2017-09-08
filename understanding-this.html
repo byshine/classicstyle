@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>byshine</title>
+    <!-- Oswald -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,600" rel="stylesheet">
+    <!-- DevIcons -->
+    <link href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+
+    <script src="https://use.fontawesome.com/aafc2fd5ae.js">
+    </script>
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Prism -->
+    <link href="css/prism.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+pre.line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+    position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+    .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+    }
+
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            color: #999;
+            display: block;
+            padding-right: 0.8em;
+            text-align: right;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">byshine</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="showcase.html">Showcase</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <section id="stacks">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" style="font-size: 1.2rem;">
+                    <h1>Understanding "this"</h1>
+                    <hr>
+<p>
+Before I begin, here's a little background knowledge about <code>this</code>. <code>this</code> is an <em>implicit</em> parameter that is passed on when a function is invoked. There's another implicit parameter called <code>arguments</code> as well. <code>arguments</code> is a lot less confusing and will be covered in an another article. It is critical to remember that <code>this</code> only has the ability to change only when a function is invoked traditionally.
+
+Let's start slow.
+<pre class="line-numbers"><code class="language-javascript">console.log(this) //window object
+</code></pre>
+
+First, before anything, <code>console.log(this)</code> will point to the <code>window</code> object. This makes sense because we are in the global context, namely the <code>window</code> context. If you don't believe me, try it for yourself (I recommend you to try all examples yourself).
+
+<pre class="line-numbers"><code class="language-javascript">console.log(this)  //window object
+let bicycle = {
+    context: this
+}
+console.log( bicycle.context ); //still window object
+</code></pre>
+
+Here, <code>bicycle.context</code> will contain the <code>window</code> object. This is consistent to our definition. We didn't invoke any functions, we accessed a property of an object. Therefore there was no implicit parameter passing happening anywhere. So it is expected that <code>bicycle.context</code> to still be window. We haven't made any changes to <code>this</code>. 
+<pre class="line-numbers"><code class="language-javascript">console.log(this)  //window object
+let bicycle = {
+    context: this
+}
+console.log( bicycle.context ); //still window object
+
+function checkContext() {
+    return this;
+}
+console.log( checkContext() ); //still window object
+</code></pre>
+
+Here, we still get <code>window</code> object even when we invoke the function <code>checkContext</code>. Remember, when we declare a function in global space, it attaches itself to the <code>window</code> object. In reality, <code>checkContext</code> becomes a <em>method</em> of window object. So really, we have invoked this function in the context of <code>window</code> and therefore the implicit parameter <code>this</code> passed on when <code>checkContext()</code> happens, it is still the <code>window</code> object. Here's a follow up example to make this clear.
+<pre class="line-numbers"><code class="language-javascript">console.log(this)  //window object
+let bicycle = {
+    context: this
+}
+console.log( bicycle.context ); //still window object
+
+function checkContext() {
+    return this;
+}
+/* Same thing */
+console.log( window.checkContext() ); //still window object
+console.log( checkContext() ); //still window object
+ 
+/* same as function checkContext() */
+window.checkContext = function() {
+    return this;
+}
+/* Same thing */
+console.log( window.checkContext() ); //still window object
+console.log( checkContext() ); //still window object
+</code></pre>
+
+From this, we can conclude that <strong>when a function is <em>executed as a method</em>, <code>this</code> becomes the object that precedes the . (dot)</strong>. Remind you that <code>bicycle.context</code> is not invoking a method. We are accessing a <em>property</em> of bicycle object.
+
+So you might ask yourself at this point, why bother with all this shit? Why do we need to even use <code>this</code>? The answer is because it is a crucial part of object-oriented programming and using <code>this</code> allows our code to be fluid, readable, maintainable, and all that jazz. You might not be able to see this in this article, but if you are pursuing a career in JavaScript, you definitely will see the benefits. Here's a little taste of an example, when working with objects, we normally do things like:
+
+<pre class="line-numbers"><code class="language-javascript">//Sample Object
+let car = {
+    color: "black",
+    engine: "V6",
+    isBlack: function () {
+        return this.color === "black";
+    }
+}
+console.log( car.isBlack() );
+</code></pre>
+
+We know that <code>isBlack</code> method will have the correct context, since we execute it as a method. What's unfortunate about this situation is however that we have no way to <i>encapsulate</i> our properties. There's no keyword such as <code>private</code> in Java, to hide our members (properties in this case). We need to turn our focus into functions when defining objects sadly, not objects if we want to properly encapsulate our object's properties (But functions are OBJECTS in JavaScript! so no worries!). But this isn't an article about object oriented programming, it is about understanding <code>this</code> and our focus will stay there.
+
+<strong>Working with Functions</strong>
+Suppose we want to represent a snowboard object.
+<pre class="line-numbers"><code class="language-javascript">function Snowboard() {
+    this.length = "152cm";
+    this.profile = "camber";
+}
+Snowboard();
+</code></pre>
+
+But as you know, invoking <code>Snowboard()</code> in this fashion, will attach <code>length</code> and  <code>profile</code> property to the <code>window</code> object.
+<pre class="line-numbers"><code class="language-javascript">function Snowboard() {
+    this.length = "152cm";
+    this.profile = "camber";
+}
+Snowboard();
+console.log(window.length);
+console.log(window.profile);
+</code></pre>
+
+This is terrible because we don't want to represent these entities to our window object. We want to represent them in our Snowboard object. So how do we represent the Snowboard object?
+<strong>
+Invoking Functions as a Constructor</strong>
+We can answer the following question by invoking functions as a constructor. We've seen this style in Java and other object oriented programming languages, where you use the <code>new</code> operator to instantiate objects. This is exactly what we will do.
+<pre class="line-numbers"><code class="language-javascript">function Snowboard() {
+    this.length = "152cm";
+    this.profile = "camber";
+}
+let snowboard = new Snowboard();
+console.log(snowboard.length);
+console.log(snowboard.profile);
+</code></pre>
+This allows us to create our own unique Snowboard object, and <code>this</code> will be set accordingly to the object we have just made. Here are the following effects when you invoke functions with <code>new</code>
+<ol>
+    <li>New empty object gets created</li>
+    <li>This new empty object gets passed as the <code>this</code> implicit parameter and this becomes the function's context</li>
+        <li>By default, this new constructed object will be returned at the end of the call</li>
+</ol>
+
+Okay, this sounds good. All confusion should be cleared. We can just use <code>new</code> operator to invoke functions to set our function context to the newly created object. However, due to the nature of JavaScript, confusion does not end here.
+<pre class="line-numbers"><code class="language-javascript">//Taken from MDN
+function Person() {
+  // The Person() constructor defines `this` as an instance of itself.
+  this.age = 0;
+
+  setInterval(function growUp() {
+    // In non-strict mode, the growUp() function defines `this` 
+    // as the global object, which is different from the `this`
+    // defined by the Person() constructor.
+    this.age++;
+  }, 1000);
+}
+let p = new Person();
+</code></pre>
+Here, we invoke Person with <code>new</code> operator, and therefore we expect the declaration <code>this.age = 0;</code> to operate on the Person Object. Moreover, we also may expect <code>this</code> inside the <code>setInterval</code> function to have the same context as well. When you run this code, the person's age will actually never update, and instead, <code>window.age</code> will continue to update. This has a tendency to confuse people and I will explain here. 
+
+Recall our previous definition, <strong>when a function is <em>executed as a method</em>, <code>this</code> becomes the object that precedes the . (dot)</strong>. With this in mind, it does not take much to see that <code>setInterval</code> is actually a method of <code>window</code> object. Therefore, we have invoked the <code>setInterval</code> function in a manner of <code>window.setInterval</code>. Therefore, it follows from our definition that it actually makes sense that the context is <code>window</code> inside <code>setInterval</code>. From this, we can also conclude that the context doesn't really matter <strong>where</strong> you call them, it only matters <strong>how</strong> it was called. Once we understand this, we have fully understood <code>this</code>. Now it's matter of intuition and experience that we need to build up for you to think that you've mastered it.
+
+We were able to "fix" our Snowboard problem by invoking the function as a constructor, but even when we did the same thing for Person, we still had some problems with the context. How do you think we can manage to solve this? (And this is mostly where all the problems in the world in terms of context happens).
+
+There are few ways around this problem,
+<ol>    
+<li>Save <code>this</code> in a variable and pass it along</li>
+<pre class="line-numbers"><code class="language-javascript">function Person() {
+  this.age = 0;
+  let context = this;
+  setInterval(function growUp() {
+    context.age++;
+  }, 1000);
+}
+let p = new Person();
+</code></pre>
+<li>Use arrow functions (how does this work?: coming soon..)</li>
+<pre class="line-numbers"><code class="language-javascript">function Person() {
+  this.age = 0;
+  setInterval( () => this.age++ , 1000);
+}
+let p = new Person();
+</code></pre>
+    <li>Bind (<em>Note that you cannot use call/apply in this fashion</em>)</li>
+<pre class="line-numbers"><code class="language-javascript">function Person() {
+  this.age = 0;
+  setInterval(function growUp() {
+    this.age++;
+  }.bind(this), 1000);
+}
+let p = new Person();
+</code></pre>
+</ol>
+There also may be more ways, but these are the general approaches taken to fix this type of situation. There is another way to force a context using <code>call</code> and <code>apply</code> and we will definitely get to those. The reason why we can't use it here because <code>call</code> and <code>apply</code> are actually ways of invoking a function. We don't want to invoke the function in this case, we want <code>setInterval</code> to do that for us, and all we want to do is supply a callback with the correct context, which is what <code>bind</code> is perfect for.
+
+In summary, important thing to notice here is that we essentially provided <code>setTimeout</code> a <strong>callback</strong>. Anytime we provide a callback to another function, we need to be aware that <code>this</code> may not be the value that we expect. In almost all cases, it won't be. Remember, <em>it is how the function is invoked</em>, not where.
+
+Moving on, let's take a look at few more examples where confusion might occur. Sometimes, you assign methods of one object to another object. Going back to our snowboard example, let's take a look at why we might be confused.
+<pre class="line-numbers"><code class="language-javascript">function Snowboard() {
+    this.length = "152cm";
+    this.profile = "camber";
+    this.color = "black";
+    this.getColor = function () {
+        return this.color;
+    }
+}
+
+function Ski() {
+    this.length = "152cm";
+    this.color = "yellow";
+}
+
+let snowboard = new Snowboard();
+let ski = new Ski();
+ski.getColor = snowboard.getColor;
+console.log( ski.getColor() );
+</code></pre>
+
+The output here will be yellow. Remember, we have a method <code>getColor</code> on the <code>Snowboard</code> function, does not mean guarantee the value of <code>this</code> to be the one we want. The context has shifted to our <code>ski</code> object when <code>ski.getColor = snowboard.getColor;</code> was done. Notice that this was an assignment, not a function invocation. We only invoked the function after we had transferred it to the ski object, which becomes a ski method. If this doesn't make sense to you, what we ultimately did was:
+<pre class="line-numbers"><code class="language-javascript">let snowboard = new Snowboard();
+let ski = new Ski();
+ski.getColor = function () {
+    return this.color;
+}
+console.log( ski.getColor() );
+</code></pre>
+This was harder to see, because our method was branded under <code>snowboard.getColor</code> but the above example is the exactly same thing. If this didn't confuse you, very good. If it did, well now you know. Notice that this situation is also identical to this:
+<pre class="line-numbers"><code class="language-javascript">function Snowboard() {
+    this.length = "152cm";
+    this.profile = "camber";
+    this.color = "black";
+    this.getColor = function () {
+        return this.color;
+    }
+}
+let snowboard = new Snowboard();
+window.color = "blue";
+var snowboardColor = snowboard.getColor;
+console.log( snowboardColor() );
+</code></pre>
+This will output blue. Once again, we had transferred our context to the <code>window</code> object when we performed <code>var snowboardColor = snowboard.getColor;</code>. The result would have been the same if we used <code>let snowboardColor = snowboard.getColor;</code>. In either case, be aware when methods are assigned to something else. It also changes the context.
+
+In a situation like this, we can use <code>call</code> and <code>apply</code> to force the context to what we want it to be.
+<pre class="line-numbers"><code class="language-javascript">function Snowboard() {
+    this.length = "152cm";
+    this.profile = "camber";
+    this.color = "black";
+    this.getColor = function () {
+        return this.color;
+    }
+}
+let snowboard = new Snowboard();
+window.color = "blue";
+var snowboardColor = snowboard.getColor;
+
+console.log( snowboardColor.call( snowboard ) );
+console.log( snowboardColor.apply( snowboard ) );
+</code></pre>
+
+By invoking the function using <code>call</code> and <code>bind</code> this will output black. Let's take a look at one more example. Suppose inside the <code>getColor</code> method we have an inner function that performs some other task.
+<pre class="line-numbers"><code class="language-javascript">function Snowboard() {
+    this.length = "152cm";
+    this.profile = "camber";
+    this.color = "black";
+    this.getColor = function () {
+        function supportFunction() {
+            this.variant = "red";
+        }
+        supportFunction();
+        return this.color;
+    }
+}
+let snowboard = new Snowboard();
+console.log( snowboard.getColor() );
+console.log( window.variant );
+</code></pre>
+
+Here, <code>this.variant</code> inside the inner function refers to the <code>window</code> object. Sadly, inner functions don't have the ability to access the <code>this</code> variable outside the closure. Remember, every time we invoke a function, it gets an instance of the <code>this</code> value, and it was assigned <code>window</code> when we had called <code>supportFunction</code>. Just because it was inside a method already, it does not mean that it will have the correct context. Every single function call, has its own instance of <code>this</code> and we need to be aware.
+</p>           
+                    </div>
+                </div>
+            </div>
+            </section>
+    <footer>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <p id="footer-paragraph">made by aaron | aaron@byshine.net</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<!-- jQuery 3.2.1 -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+</script>
+<!-- Custom JS -->
+<script src="js/app.js"></script>
+<script src="js/prism.js"></script>
+<script>
+(function() {
+
+if (typeof self === 'undefined' || !self.Prism || !self.document) {
+    return;
+}
+
+Prism.hooks.add('complete', function (env) {
+    if (!env.code) {
+        return;
+    }
+
+    // works only for <code> wrapped inside <pre> (not inline)
+    var pre = env.element.parentNode;
+    var clsReg = /\s*\bline-numbers\b\s*/;
+    if (
+        !pre || !/pre/i.test(pre.nodeName) ||
+            // Abort only if nor the <pre> nor the <code> have the class
+        (!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+    ) {
+        return;
+    }
+
+    if (env.element.querySelector(".line-numbers-rows")) {
+        // Abort if line numbers already exists
+        return;
+    }
+
+    if (clsReg.test(env.element.className)) {
+        // Remove the class "line-numbers" from the <code>
+        env.element.className = env.element.className.replace(clsReg, '');
+    }
+    if (!clsReg.test(pre.className)) {
+        // Add the class "line-numbers" to the <pre>
+        pre.className += ' line-numbers';
+    }
+
+    var match = env.code.match(/\n(?!$)/g);
+    var linesNum = match ? match.length + 1 : 1;
+    var lineNumbersWrapper;
+
+    var lines = new Array(linesNum + 1);
+    lines = lines.join('<span></span>');
+
+    lineNumbersWrapper = document.createElement('span');
+    lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+    lineNumbersWrapper.className = 'line-numbers-rows';
+    lineNumbersWrapper.innerHTML = lines;
+
+    if (pre.hasAttribute('data-start')) {
+        pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+    }
+
+    env.element.appendChild(lineNumbersWrapper);
+
+});
+
+}());
+</script>
+</body>
+
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>byshine</title>
+    <!-- Oswald -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,600" rel="stylesheet">
+    <!-- DevIcons -->
+    <link href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+
+    <script src="https://use.fontawesome.com/aafc2fd5ae.js">
+    </script>
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Prism -->
+    <link href="css/prism.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+pre.line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+    position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+    .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+    }
+
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            color: #999;
+            display: block;
+            padding-right: 0.8em;
+            text-align: right;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">byshine</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="showcase.html">Showcase</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <section id="stacks">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" style="font-size: 1.2rem;">
+                    <h1>Queues</h1>
+                    <hr>
+<p>
+Queues in essence are linked lists with a fixed mechanism of removing and adding nodes. So if you already know how linked lists work, you already know how to queues work. Think of a stack implemented with linked lists. We push nodes and pop the last one, giving us a LIFO (Last In First Out) structure. Queues are FIFO (First in First Out) structures. All we need to do is add nodes from one side and remove from the other. Now Priority Queues are different beasts. Let's not get into that for now.
+We will be modifying our singly linked list implementation for this queue.
+
+<pre class="line-numbers"><code class="language-javascript">function Node( data ) {
+    this.data = data;
+    this.next = null;
+}
+
+function Queue() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+}
+</code></pre>
+
+Adding nodes in a queue is exactly the same as adding a node in a singly linked list. But instead of add, we'll call this <em>enqueue</em>
+
+<pre class="line-numbers"><code class="language-javascript">Queue.prototype.enqueue = function( data ) {
+    let node = new Node( data );
+
+    if ( !this.head ) {
+        this.head = node;
+        this.tail = node;
+        this.size++;
+        return node;
+    }
+
+    this.tail.next = node;
+    this.tail = node;
+    this.size++;
+    return node;
+}
+</code></pre>
+
+For popping, or usually called <em>dequeue</em>, we always remove the head. This makes dequeue very simple to implement. It doesn't make sense to remove any nodes other than the head. (In the real world, you may have inserted something in queue by accident, and may want to remove such item so yes, it actually does make sense to remove a node besides the head- but we have already seen how to remove nodes in a list. The same method can apply here and that method is not called dequeue, it should be called remove.)
+
+<pre class="line-numbers"><code class="language-javascript">//Concrete Implementation ES6+
+function Node( data ) {
+    this.data = data;
+    this.next = null;
+}
+
+function Queue() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+}
+
+Queue.prototype.enqueue = function( data ) {
+    let node = new Node( data );
+
+    if ( !this.head ) {
+        this.head = node;
+        this.tail = node;
+        this.size++;
+        return node;
+    }
+
+    this.tail.next = node;
+    this.tail = node;
+    this.size++;
+    return node;
+}
+
+Queue.prototype.dequeue = function() {
+     
+    if ( !this.head ) return null;
+    let dequeueNode = this.head;
+    this.head = this.head.next;
+    if ( !this.head ) this.tail = null;
+    size--;
+    return dequeueNnode;
+    
+}
+
+Queue.prototype.peek = function() { 
+    return this.head;   
+}
+
+Queue.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+</code></pre>
+</p>           
+                    </div>
+                </div>
+            </div>
+            </section>
+    <footer>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <p id="footer-paragraph">made by aaron | aaron@byshine.net</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<!-- jQuery 3.2.1 -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+</script>
+<!-- Custom JS -->
+<script src="js/app.js"></script>
+<script src="js/prism.js"></script>
+<script>
+(function() {
+
+if (typeof self === 'undefined' || !self.Prism || !self.document) {
+    return;
+}
+
+Prism.hooks.add('complete', function (env) {
+    if (!env.code) {
+        return;
+    }
+
+    // works only for <code> wrapped inside <pre> (not inline)
+    var pre = env.element.parentNode;
+    var clsReg = /\s*\bline-numbers\b\s*/;
+    if (
+        !pre || !/pre/i.test(pre.nodeName) ||
+            // Abort only if nor the <pre> nor the <code> have the class
+        (!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+    ) {
+        return;
+    }
+
+    if (env.element.querySelector(".line-numbers-rows")) {
+        // Abort if line numbers already exists
+        return;
+    }
+
+    if (clsReg.test(env.element.className)) {
+        // Remove the class "line-numbers" from the <code>
+        env.element.className = env.element.className.replace(clsReg, '');
+    }
+    if (!clsReg.test(pre.className)) {
+        // Add the class "line-numbers" to the <pre>
+        pre.className += ' line-numbers';
+    }
+
+    var match = env.code.match(/\n(?!$)/g);
+    var linesNum = match ? match.length + 1 : 1;
+    var lineNumbersWrapper;
+
+    var lines = new Array(linesNum + 1);
+    lines = lines.join('<span></span>');
+
+    lineNumbersWrapper = document.createElement('span');
+    lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+    lineNumbersWrapper.className = 'line-numbers-rows';
+    lineNumbersWrapper.innerHTML = lines;
+
+    if (pre.hasAttribute('data-start')) {
+        pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+    }
+
+    env.element.appendChild(lineNumbersWrapper);
+
+});
+
+}());
+</script>
+</body>
+
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>byshine</title>
+    <!-- Oswald -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,600" rel="stylesheet">
+    <!-- DevIcons -->
+    <link href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+
+    <script src="https://use.fontawesome.com/aafc2fd5ae.js">
+    </script>
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Prism -->
+    <link href="css/prism.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+pre.line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+    position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+    .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+    }
+
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            color: #999;
+            display: block;
+            padding-right: 0.8em;
+            text-align: right;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">byshine</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="showcase.html">Showcase</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <section id="stacks">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" style="font-size: 1.2rem;">
+                    <h1>Linked List</h1>
+                    <hr>
+<p>
+Let's start implementing our singly linked list. If you have no idea what that is, there are good tutorials available online.
+First we need to represent a node.
+<pre class="line-numbers"><code class="language-javascript">function Node( data ) {
+    this.data = data;
+    this.next = null;
+}
+</code></pre>
+
+Now, let's define our Singly Linked List.
+
+<pre class="line-numbers"><code class="language-javascript">function SinglyLinkedList() {
+    this.head = null;
+    this.size = 0;
+}
+</code></pre>
+
+Easy enough, let's define our <strong>add</strong> operation.
+
+<pre class="line-numbers"><code class="language-javascript">SinglyLinkedList.prototype.add = function( data ) {
+    let node = new Node( data );
+
+    if ( this.head === null ) {
+        this.head = node;
+        this.size++;
+        return node;
+    }
+
+    let tempNode = this.head;
+    while ( tempNode.next !== null ) {
+        tempNode = tempNode.next;
+    }
+
+    tempNode.next = node;
+    this.size++;
+    return node;
+}
+</code></pre>
+
+Moving on to <strong>delete/remove</strong>.. This is a bit more tricky than <strong>add</strong>. It's simple if we remove the first or last item on the list, but extra work is required to remove anywhere in between. Since anytime we remove a node in between, we need to update the relevant nodes to point to the correct nodes in order. We'll see how that's done.
+
+<pre class="line-numbers"><code class="language-javascript">SinglyLinkedList.prototype.remove = function( data ) {
+
+    let currentNode = this.head;
+
+    if ( currentNode === null ) return null;
+
+    //If the node we want to remove is the head
+    if ( currentNode.data === data ) {
+        this.head = currentNode.next;
+        this.size--;
+        return 1;
+    }
+
+    //If the node we want to remove is not the head node
+    while ( currentNode.next !== null ) {
+        if ( currentNode.next.data === data ) {
+            currentNode.next = currentNode.next.next;
+            this.size--;
+            return 1;
+        }
+        currentNode = currentNode.next;
+    }
+
+    return 0;
+}
+</code></pre>
+
+Note that I did not decide to choose to return the node was removed. This is because it's really up to you. You can return the node, or you can simply return the data, or in this case you simply want the notion that something was removed. If you insist on wanting the node that was removed returned, we can modify the code a little bit like this
+
+<pre class="line-numbers"><code class="language-javascript">SinglyLinkedList.prototype.remove = function( data ) {
+
+    let currentNode = this.head;
+    let removedNode = null;
+    if ( currentNode === null ) return 0;
+
+    //If the node we want to remove is the head
+    if ( currentNode.data === data ) {
+        this.head = currentNode.next;
+        this.size--;
+        removedNode = currentNode;
+        return removedNode;
+    }
+
+    //If the node we want to remove is not the head node
+    while ( currentNode.next !== null ) {
+        if ( currentNode.next.data === data ) {
+            removedNode = currentNode.next;
+            currentNode.next = currentNode.next.next;
+            this.size--;
+            return removedNode;
+        }
+        currentNode = currentNode.next;
+    }
+
+    return null;
+}
+</code></pre>
+
+We can also remove the removedNode's reference to the next node, which will still be present after the removedNode is returned from the function.
+<pre class="line-numbers"><code class="language-javascript">//Optional
+removedNode.next = null;
+</code></pre>
+From this, we can add a simple handy method to check if the list is empty.
+
+<pre class="line-numbers"><code class="language-javascript">SinglyLinkedList.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+</code></pre>
+
+With this, it completes our basic implementation of a SinglyLinkedList. We can optimize the if expression a little bit here, saving us line and eye space.
+<pre class="line-numbers"><code class="language-javascript">//Concrete Implementation ES6+
+
+function Node( data ) {
+    this.data = data;
+    this.next = null;
+}
+
+function SinglyLinkedList() {
+    this.head = null;
+    this.size = 0;
+}
+
+SinglyLinkedList.prototype.add = function( data ) {
+    let node = new Node( data );
+
+    if ( !this.head ) {
+        this.head = node;
+        this.size++;
+        return node;
+    }
+
+    let tempNode = this.head;
+    while ( tempNode.next ) {
+        tempNode = tempNode.next;
+    }
+
+    tempNode.next = node;
+    this.size++;
+    return node;
+}
+
+SinglyLinkedList.prototype.remove = function( data ) {
+
+    let currentNode = this.head;
+    let removedNode = null;
+    if ( !currentNode ) return 0;
+
+    //If the node we want to remove is the head
+    if ( currentNode.data === data ) {
+        this.head = currentNode.next;
+        this.size--;
+        removedNode = currentNode;
+        return removedNode;
+    }
+
+    //If the node we want to remove is not the head node
+    while ( currentNode.next ) {
+        if ( currentNode.next.data === data ) {
+            removedNode = currentNode.next;
+            currentNode.next = currentNode.next.next;
+            this.size--;
+            return removedNode;
+        }
+        currentNode = currentNode.next;
+    }
+
+    return null;
+}
+
+SinglyLinkedList.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+</code></pre>
+
+
+<strong>Optimizations</strong><br>
+Notice that our implementation by no means is professional grade. Why? Because our addition actually takes O(N) time to do. Anytime we don't add to a empty list, we traverse the list all the way to the end, and add our new node there. This can be avoided if we keep a reference to the last node, called <code>tail</code>. I would call the above implementation what you call a naive implementation. In other words, we just want to get the job done. However, O(N) vs O(1) is too big of a difference to ignore and really shouldn't be implemented in the following way. If I was interviewing you and the above implementation is what I got, I'd give you props implementing it on the fly (because I suck as well). I would then ask you, if insertion can be done in O(1) time. (I'd still hire you) 
+
+Let's make the following changes.
+<pre class="line-numbers"><code class="language-javascript">function SinglyLinkedList() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+}
+</code></pre>
+
+Since we have a tail property now, we can make the following changes to add.
+<pre class="line-numbers"><code class="language-javascript">SinglyLinkedList.prototype.add = function( data ) {
+    let node = new Node( data );
+
+    if ( !this.head ) {
+        this.head = node;
+        this.tail = node;
+        this.size++;
+        return node;
+    }
+
+    this.tail.next = node;
+    this.tail = node;
+    this.size++;
+    return node;
+}
+</code></pre>
+
+How's that? We can insert in constant time now. Now to remove...
+<pre class="line-numbers"><code class="language-javascript">SinglyLinkedList.prototype.remove = function( data ) {
+
+    //If the list is empty
+    if ( !this.head ) return 0;
+
+    //If the node to remove is the head
+    if ( this.head.data === data ) {
+        this.head = this.head.next;
+        if ( !this.head ) {
+            this.tail = null;
+        }
+        this.size--;
+        return 1;
+    }
+
+    //If the node to remove is anywhere else
+    currentNode = this.head;
+    while ( currentNode.next ) {
+        if ( currentNode.next.data === data ) {
+            currentNode.next = currentNode.next.next;
+            this.size--;
+            return 1;
+        }
+        currentNode = currentNode.next;
+    }
+
+    //Return 0, no match found
+    return 0;
+}
+</code></pre>
+
+I have simplified the remove to return 1 if a node was successfully deleted. Let's add this back on.
+<pre class="line-numbers"><code class="language-javascript">//Concrete Implementation ES6+
+
+function Node( data ) {
+    this.data = data;
+    this.next = null;
+}
+
+function SinglyLinkedList() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+}
+
+SinglyLinkedList.prototype.add = function( data ) {
+    let node = new Node( data );
+
+    if ( !this.head ) {
+        this.head = node;
+        this.tail = node;
+        this.size++;
+        return node;
+    }
+
+    this.tail.next = node;
+    this.tail = node;
+    this.size++;
+    return node;
+}
+
+SinglyLinkedList.prototype.remove = function( data ) {
+
+    //If the list is empty
+    if ( !this.head ) return null;
+    
+    let removedNode = null;
+    //If the node to remove is the head
+    if ( this.head.data === data ) {
+        removedNode = this.head;
+        this.head = this.head.next;
+        if ( !this.head ) {
+            this.tail = null;
+        }
+        this.size--;
+        return removedNode;
+    }
+
+    //If the node to remove is anywhere else
+    currentNode = this.head;
+    while ( currentNode.next ) {
+        if ( currentNode.next.data === data ) {
+            removedNode = currentNode.next;
+            currentNode.next = currentNode.next.next;
+            this.size--;
+            return removedNode;
+        }
+        currentNode = currentNode.next;
+    }
+
+    //Return null, no match found
+    return null;
+}
+
+SinglyLinkedList.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+</code></pre>
+</p>           
+                    </div>
+                </div>
+            </div>
+            </section>
+</p>
+    <footer>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <p id="footer-paragraph">made by aaron | aaron@byshine.net</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<!-- jQuery 3.2.1 -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+</script>
+<!-- Custom JS -->
+<script src="js/app.js"></script>
+<script src="js/prism.js"></script>
+<script>
+(function() {
+
+if (typeof self === 'undefined' || !self.Prism || !self.document) {
+    return;
+}
+
+Prism.hooks.add('complete', function (env) {
+    if (!env.code) {
+        return;
+    }
+
+    // works only for <code> wrapped inside <pre> (not inline)
+    var pre = env.element.parentNode;
+    var clsReg = /\s*\bline-numbers\b\s*/;
+    if (
+        !pre || !/pre/i.test(pre.nodeName) ||
+            // Abort only if nor the <pre> nor the <code> have the class
+        (!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+    ) {
+        return;
+    }
+
+    if (env.element.querySelector(".line-numbers-rows")) {
+        // Abort if line numbers already exists
+        return;
+    }
+
+    if (clsReg.test(env.element.className)) {
+        // Remove the class "line-numbers" from the <code>
+        env.element.className = env.element.className.replace(clsReg, '');
+    }
+    if (!clsReg.test(pre.className)) {
+        // Add the class "line-numbers" to the <pre>
+        pre.className += ' line-numbers';
+    }
+
+    var match = env.code.match(/\n(?!$)/g);
+    var linesNum = match ? match.length + 1 : 1;
+    var lineNumbersWrapper;
+
+    var lines = new Array(linesNum + 1);
+    lines = lines.join('<span></span>');
+
+    lineNumbersWrapper = document.createElement('span');
+    lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+    lineNumbersWrapper.className = 'line-numbers-rows';
+    lineNumbersWrapper.innerHTML = lines;
+
+    if (pre.hasAttribute('data-start')) {
+        pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+    }
+
+    env.element.appendChild(lineNumbersWrapper);
+
+});
+
+}());
+</script>
+</body>
+
+</html>

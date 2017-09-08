@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<title>byshine</title><!-- Oswald -->
+	<link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet"><!-- DevIcons -->
+	<link href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css" rel="stylesheet"><!-- Font Awesome -->
+
+	<script src="https://use.fontawesome.com/aafc2fd5ae.js">
+	</script><!-- Bootstrap CSS -->
+	<link href="css/bootstrap.css" rel="stylesheet"><!-- Custom CSS -->
+	<link href="css/showcase-flexbox.css" rel="stylesheet">
+</head>
+<body>
+	
+	<section>
+		<h1 class="text-center">Flexbox Research</h1>
+	</section>
+
+	<p>Consider the following 3 block level elements, they will stack on <em>top</em> of each other on default settings</p>
+	<section id="initial">
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+	</section>
+
+	<p><br />After adding <code>display: flex;</code> to the parent container of the 3 div blocks. We get the following result:</p>
+
+	<section id="flex">
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+	</section>
+
+	<p><br>Notice how this looks similar adding <code>display: inline-block;</code> to all the divs inside the container</p>
+
+	<section id="inline-block">
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+	</section>
+
+	<p><br>In both cases, the important take away is that the div blocks wrap to the width of the content and allows them to be displayed in a single row. This means that if we give
+	a width to each of the div's which are called <code>flex items</code>, we can now easily use this power to generate layouts. Here's an example of the 3 div's given a width (33.33333% each): </p>
+
+	<section id="flex-equal-width">
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+	</section>
+
+	<p><br>There will be a better way of doing this however which we will explore later.</p>
+	<p>One other fundamental notion of flexboxes is the ability to wrap around infinitely. This is shown below:</p>
+
+	<section id="flex">
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+	</section>
+
+
+	<p><br />Notice here that flexbox works too perfectly. It does fit all items in a row but at the expense of overflowing the containers. We can fix this by adding
+	<code>flex-wrap: wrap;</code></p>
+
+<section id="flex-wrap">
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+	</section>
+
+	<p>Side note: We can also choose the direction of the flex layout with <code>flex-direction: row, flex-direction: column, flex-direction: row-reverse, flex-direction: column-reverse</code></p>
+
+	<p><br>Now the interesting part is the controlling the actual <code>flex items</code> size & proportion. This is done by adding <code>flex</code>. Flex takes
+	three values, with them being <code>flex-grow, flex-shrink, flex-basis</code>.</p>
+	<p>Flex-grow works as a unitless proportion. If we set <code>flex: 1</code> to all the 3 divs, then each will take up equal sizes.</p>
+
+	<section id="flex-flexequalp">
+		<div class="bg-blue">Blue</div>
+		<div class="bg-red">Red</div>
+		<div class="bg-green">Green</div>
+	</section>
+
+	<p>Notice how <code>flex: 1</code> provided nearly identical/better results than setting each of the div's width to 33.3333%</p>
+	<p>The second part of flex, <code>flex-shrink</code> will be covered later.</p>
+	<p>Flex-basis is the minimum size value that the flex item should occupy. This is not unitless, so you can give it a percentage like we did, 33.3333%. When used in combination
+	with <code>flex-grow</code>, flex basis will give the minimum space, and rest of the space exceeding that will be proportional. This may or may not be what you want. Notice
+	when compared with the traditional grid systems using floats, flexbox still is really the same. Flexbox was not made for grids, but for layouts. However, one can emulate  a grid system with flexbox just as it has been done with floats. But the nice thing about flexboxes are that it comes with variety of positioning concepts that we normally use. For example, we can use <code>align-items</code> for vertical centering, and <code>justify-content</code> for horizontal centering.</p> 
+
+	<!-- jQuery 3.2.1 -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+	</script> <!-- Bootstrap JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+	</script> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+	</script> <!-- Custom JS -->
+	<script src="js/app.js"></script>
+</body>
+</html>

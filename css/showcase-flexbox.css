@@ -1,0 +1,48 @@
+.bg-blue {
+	background-color: blue;
+}
+
+.bg-green {
+	background-color: green;
+}
+
+.bg-red {
+	background-color: red;
+}
+
+#flex {
+	display: flex;
+}
+
+#inline-block>div {
+	display: inline-block;
+}
+
+#flex-equal-width {
+	display: flex;
+}
+
+#flex-equal-width>div {
+	width: 33.33333%;
+}
+
+#flex-max-equal-width {
+	display: flex;
+}
+
+#flex-max-equal-width>div {
+	max-width: 33.33333%;
+}
+
+#flex-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#flex-flexequalp {
+	display: flex;
+}
+
+#flex-flexequalp>div {
+	flex: 1;
+}

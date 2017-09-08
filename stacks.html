@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>byshine</title>
+    <!-- Oswald -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,600" rel="stylesheet">
+    <!-- DevIcons -->
+    <link href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+
+    <script src="https://use.fontawesome.com/aafc2fd5ae.js">
+    </script>
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Prism -->
+    <link href="css/prism.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+pre.line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+    position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+    .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+    }
+
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            color: #999;
+            display: block;
+            padding-right: 0.8em;
+            text-align: right;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">byshine</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="showcase.html">Showcase</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <section id="stacks">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" style="font-size: 1.2rem;">
+                    <h1>Stacks</h1>
+                    <hr>
+Normally, when we think about implementing stacks in any language, we also have to implement our stack operations, such as <strong>push</strong>, <strong>pop</strong>, and <strong>peek</strong>. In JavaScript, we already have a <strong><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/push?v=example">push</a></strong>, and <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop?v=control">pop</a></strong> available to us, leaving us with <strong>peek</strong> to implement.
+
+So really, all we have to do is brand our variable to a stack and we're good to go.
+<pre class="line-numbers"><code class="language-javascript">//ES6+
+
+let stack = [];
+
+//Push example
+stack.push(1);
+stack.push(2);
+
+
+//Pop example
+stack.pop();
+</code></pre>
+
+Really in JavaScript you do not need to implement a stack (push and pop) if you're using an array to represent the underlying data structure. We still need to take care of <strong>peek</strong>, or matter of a fact what about other operations such as <strong>isEmpty</strong>?
+<ul>
+    <li>Peek: We need to access the last element in the array and return that element</li>
+    <li>isEmpty: We need to check if the array is empty.
+</ul>
+
+We can access the last element in the array using the innate <strong>length</strong> property of the array.
+
+<pre class="line-numbers"><code class="language-javascript">//Peek
+Array.prototype.peek = function() {
+    return this[this.length-1];
+}
+stack.peek();
+
+//isEmpty
+Array.prototype.isEmpty = function() {
+    if ( this.length === 0 ) {
+        return true;
+    }
+    return false;
+}
+stack.isEmpty();
+</code></pre>
+
+There we have it, we have a somewhat useful stack structure that we can use to support our code. However, notice that I had to add these methods to <strong>Array.prototype</strong>. I don't like it and neither should you. This means that anytime we declare an array in our program, we will have the following peek and isEmpty methods even when we don't need them. This ends up taking up space and to be frank, we shouldn't ignore this.
+
+<pre class="line-numbers"><code class="language-javascript">//Concrete Implementation ES6+
+
+let stack = [];
+Array.prototype.peek = function() {
+    return this[this.length-1];
+}
+Array.prototype.isEmpty = function() {
+    if ( this.length === 0 ) {
+        return true;
+    }
+    return false;
+}
+</code></pre>
+
+We want to move away from adding new methods to the Array prototype, since peek and isEmpty are implementations that are specifically in this case for stacks, not arrays in general. What we really want is a <strong>Stack object</strong>. An object that will carry all of our operations of a stack and not populate any other prototypes or objects. We want a stack that is a stack. Let's start by declaring one.
+
+<pre class="line-numbers"><code class="language-javascript">function Stack() {
+    this.size = 0;
+    this.structure = [];
+}
+</code></pre>
+
+Now we can define our methods around this function.
+
+<pre class="line-numbers"><code class="language-javascript">//Concrete Implementation ES6+
+function Stack() {
+    this.size = 0;
+    this.structure = [];
+}
+
+
+Stack.prototype.push = function(data) {
+    this.structure.push(data);
+    this.size++;
+}
+
+Stack.prototype.pop = function() {
+    this.structure.pop();
+    this.size--;
+}
+
+Stack.prototype.peek = function() {
+    return this.structure[this.size-1];
+}
+
+Stack.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+
+let stack = new Stack();
+stack.push(1);
+stack.push(2);
+stack.push(3);
+stack.pop();
+console.log( stack.peek() );
+console.log( stack.isEmpty() );
+</code></pre>
+
+That's more like it! We now have a Stack object and we didn't pollute the Array prototype. But... we still shouldn't be satisfied here. Our implementation for <strong>pop</strong> and <strong>push</strong> have been coming from JavaScript, not us. Let's start implementing our own. Moreover, we're going to give pop the ability to return the deleted node.
+
+<pre class="line-numbers"><code class="language-javascript">//Concrete Implementation ES6+
+function Stack() {
+    this.size = 0;
+    this.structure = [];
+}
+
+Stack.prototype.push = function(data) {
+    this.structure[this.size] = data;
+    this.size++;
+}
+
+Stack.prototype.pop = function() {
+    if ( !this.size ) return null;
+    let deletedNode = this.structure[this.size-1];
+    delete this.structure[this.size-1];
+    this.size--;
+    return deletedNode;
+}
+
+Stack.prototype.peek = function() {
+    return this.structure[this.size-1];
+}
+
+Stack.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+</code></pre>
+
+You might wonder at this point, when implementing stacks with arrays, we are very fond with the intuition that arrays are static. It means they do not resize. But we were able to treat the array like it's an array list. This is because JavaScript can dynamically resize arrays for us, and well.. the mechanics of that.. let's not get into that. We can do a bit more with this, but rest of it is labor. For example, we should really check in our peek method if the stack is empty. Otherwise, the current implementation will return undefined. Handle it the way you want.
+
+Moving on, we can implement stacks using a LinkedList. We have used arrays so far, but let's kick it up a notch and use a LinkedList.
+
+<strong><span style="color: #ff0000;">Coming Soon</span></strong>                    
+                    </div>
+                </div>
+            </div>
+            </section>
+</p>
+    <footer>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <p id="footer-paragraph">made by aaron | aaron@byshine.net</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<!-- jQuery 3.2.1 -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+</script>
+<!-- Custom JS -->
+<script src="js/app.js"></script>
+<script src="js/prism.js"></script>
+<script>
+(function() {
+
+if (typeof self === 'undefined' || !self.Prism || !self.document) {
+    return;
+}
+
+Prism.hooks.add('complete', function (env) {
+    if (!env.code) {
+        return;
+    }
+
+    // works only for <code> wrapped inside <pre> (not inline)
+    var pre = env.element.parentNode;
+    var clsReg = /\s*\bline-numbers\b\s*/;
+    if (
+        !pre || !/pre/i.test(pre.nodeName) ||
+            // Abort only if nor the <pre> nor the <code> have the class
+        (!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+    ) {
+        return;
+    }
+
+    if (env.element.querySelector(".line-numbers-rows")) {
+        // Abort if line numbers already exists
+        return;
+    }
+
+    if (clsReg.test(env.element.className)) {
+        // Remove the class "line-numbers" from the <code>
+        env.element.className = env.element.className.replace(clsReg, '');
+    }
+    if (!clsReg.test(pre.className)) {
+        // Add the class "line-numbers" to the <pre>
+        pre.className += ' line-numbers';
+    }
+
+    var match = env.code.match(/\n(?!$)/g);
+    var linesNum = match ? match.length + 1 : 1;
+    var lineNumbersWrapper;
+
+    var lines = new Array(linesNum + 1);
+    lines = lines.join('<span></span>');
+
+    lineNumbersWrapper = document.createElement('span');
+    lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+    lineNumbersWrapper.className = 'line-numbers-rows';
+    lineNumbersWrapper.innerHTML = lines;
+
+    if (pre.hasAttribute('data-start')) {
+        pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+    }
+
+    env.element.appendChild(lineNumbersWrapper);
+
+});
+
+}());
+</script>
+</body>
+
+</html>

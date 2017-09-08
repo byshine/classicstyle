@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>byshine</title>
+    <!-- Oswald -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,600" rel="stylesheet">
+    <!-- DevIcons -->
+    <link href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+
+    <script src="https://use.fontawesome.com/aafc2fd5ae.js">
+    </script>
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Prism -->
+    <link href="css/prism.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+pre.line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+    position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+    .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+    }
+
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            color: #999;
+            display: block;
+            padding-right: 0.8em;
+            text-align: right;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">byshine</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="showcase.html">Showcase</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <section id="stacks">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" style="font-size: 1.2rem;">
+                    <h1>Doubly Linked List</h1>
+                    <hr>
+<p>
+We're going to build on the singly linked list as a base and complete our implementation. First, doubly linked lists are singly linked lists with a slight modification. Everything works the same except each node now has a pointer to the previous node as well as the next node. That's the real difference between these two structures. We'll see how this changes things in our code.
+
+Let's start of by making changes to our node function.
+
+<pre class="line-numbers"><code class="language-javascript">//Node Object/Function
+function Node( data ) {
+    this.data = data;
+    this.prev = null;
+    this.next = null;
+}
+</code></pre>
+
+Our wrapper object, the DoublyLinkedList will stay identical to a singly linked list implementation but with the additional of a reference to the tail end of the list. We need this change because whenever we add a new node into this list, the new node will need to also reference the previous node. If we keep track of the tail node, we can point the new node that is being added to the tail node as the previous node.
+<pre class="line-numbers"><code class="language-javascript">//Doubly Linked List
+function DoublyLinkedList() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+}
+</code></pre>
+
+Let's define are <strong>add</strong> operation.
+<pre class="line-numbers"><code class="language-javascript">//Doubly Linked List Add.
+DoublyLinkedList.prototype.add = function (data) {
+
+    let newNode = new Node(data);
+
+    //If the list is empty Note: You can check if this.head is null as well.
+    if ( !this.size ) {
+        this.head = newNode;
+        this.tail = newNode;
+        this.size++;
+        return newNode;
+    }
+
+    //If the list is not empty
+    this.tail.next = newNode;
+    newNode.prev = this.tail;
+    this.tail = newNode;
+    this.size++;
+    return newNode;
+
+}
+</code></pre>
+
+The addition of a new node here is simple. If the list is empty, we simply add it and set the head and the tail to point to the new node. If the list is not empty, we point the original tail's next property to point to the new node. Then we assign the new node's previous property to the original tail. Then we finally declare the tail as the new node. Let's move on to the <strong>remove</strong> operation.
+<pre class="line-numbers"><code class="language-javascript">//Doubly Linked List Remove.
+DoublyLinkedList.prototype.remove = function (data) {
+
+    //If the list is empty
+    if ( !this.size ) return 0;
+    
+    //If the node to remove is the head
+    if ( this.head.data === data ) {
+        
+        //If the head was the only node in the list
+        if ( !this.head.next ) {
+            this.head = null;
+            this.tail = null;
+            this.size--;
+            return 1;
+        }
+
+        //If there exists some node after the head
+        this.head = this.head.next;
+        this.head.prev = null;
+        this.size--;
+        return 1;
+    }
+
+    //If the node to remove is the tail
+    if ( this.tail.data === data ) {
+        this.tail = this.tail.prev;
+        this.tail.next = null;
+        this.size--;
+        return 1;
+    }
+
+    //If the node to remove is anywhere in between head and the tail
+    let tempNode = this.head.next;
+    while ( tempNode !== this.tail ) {
+        if ( tempNode.data === data ) {
+            let tempPrevious = tempNode.prev;
+            let tempNext = tempNode.next;
+            tempPrevious.next = tempNext;
+            tempNext.prev = tempPrevious;
+            tempNode = null;
+            this.size--;
+            return 1;
+        }
+        tempNode = tempNode.next;
+    }
+    return 0; 
+}
+</code></pre>
+
+Remove part is a bit more complicated than the singly linked list variant, but I will attempt to explain this.
+<ol>
+<li>
+<strong>If the node to remove is the head</strong> we have two sub-cases. First, the list might <strong>only</strong> contain the head. If so, this is easy. We just remove the head, and have <code>this.head</code> and <code>this.tail</code> point back to null, which is originally where it's at when the list gets instantiated. If the list contains <strong>more nodes than just the head</strong>, we simply delete the head, and make the next node in line the new head. Notice that this new head has the <code>prev</code> property that has to be set to null. Otherwise, it will originally point to the head that was removed.
+</li>
+<li>
+<strong>If the node to remove is the tail</strong>, then this is easy. All we have to do is remove the tail. But we also need to go back to the previous node, and have the set the <code>next</code> property to null.
+</li>
+<li>
+If the node to remove is <strong>anywhere in between the head or tail</strong>, this is also simple. We traverse the list until we find the node we want to remove. Note that at this point in the implementation, the node will never be the head node or the tail node. Since those two cases are already handled above. So we start from the node next to the head, traverse until just before the tail. Once we find the node, we simply remove it. We set the previous node's <code>next</code> property to the <code>next</code> property of the node to be removed. We set the next node's <code>prev</code> property to the <code>prev</code> property of the node to be removed. Put it simply, we remove the reference to the node that is being removed, and re-link from both sides. 
+</li>
+</ol>
+
+Note that this generates a scenario where removing the head or tail node generates a running time of O(1). However, the running time of this remove implementation is still considered O(N).
+
+Let's modify our remove operation to return the node that was removed.
+<pre class="line-numbers"><code class="language-javascript">//Doubly Linked List Remove.
+DoublyLinkedList.prototype.remove = function (data) {
+
+    //If the list is empty
+    if ( !this.size ) return null;
+
+    let removedNode = null;
+    
+    //If the node to remove is the head
+    if ( this.head.data === data ) {
+        removedNode = this.head;
+        //If the head was the only node in the list
+        if ( !this.head.next ) {
+            
+            this.head = null;
+            this.tail = null;
+            this.size--;
+            return removedNode;
+        }
+
+        //If there exists some node after the head
+        this.head = this.head.next;
+        this.head.prev = null;
+        this.size--;
+        return removedNode;
+    }
+
+    //If the node to remove is the tail
+    if ( this.tail.data === data ) {
+        removedNode = this.tail;
+        this.tail = this.tail.prev;
+        this.tail.next = null;
+        this.size--;
+        return removedNode;
+    }
+
+    //If the node to remove is anywhere in between head and the tail
+    let tempNode = this.head.next;
+    while ( tempNode !== this.tail ) {
+        if ( tempNode.data === data ) {
+            removedNode = tempNode;
+            let tempPrevious = tempNode.prev;
+            let tempNext = tempNode.next;
+            tempPrevious.next = tempNext;
+            tempNext.prev = tempPrevious;
+            tempNode = null;
+            this.size--;
+            return removedNode;
+        }
+        tempNode = tempNode.next;
+    }
+    return null; 
+}
+</code></pre>
+
+Let's not forget about our <code>isEmpty</code> operation, which is the easiest out of them all.
+
+<pre class="line-numbers"><code class="language-javascript">//Doubly Linked List isEmpty.
+DoublyLinkedList.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+</code></pre>
+
+There you have it. This completes our basic doubly linked list.
+
+<pre class="line-numbers"><code class="language-javascript">//Node Object/Function
+function Node( data ) {
+    this.data = data;
+    this.prev = null;
+    this.next = null;
+}
+
+//Doubly Linked List
+function DoublyLinkedList() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+}
+
+//Doubly Linked List Add.
+DoublyLinkedList.prototype.add = function (data) {
+
+    let newNode = new Node(data);
+
+    //If the list is empty Note: You can check if this.head is null as well.
+    if ( !this.size ) {
+        this.head = newNode;
+        this.tail = newNode;
+        this.size++;
+        return newNode;
+    }
+
+    //If the list is not empty
+    this.tail.next = newNode;
+    newNode.prev = this.tail;
+    this.tail = newNode;
+    this.size++;
+    return newNode;
+
+}
+
+//Doubly Linked List Remove.
+DoublyLinkedList.prototype.remove = function (data) {
+
+    //If the list is empty
+    if ( !this.size ) return null;
+
+    let removedNode = null;
+    
+    //If the node to remove is the head
+    if ( this.head.data === data ) {
+        removedNode = this.head;
+        //If the head was the only node in the list
+        if ( !this.head.next ) {
+            
+            this.head = null;
+            this.tail = null;
+            this.size--;
+            return removedNode;
+        }
+
+        //If there exists some node after the head
+        this.head = this.head.next;
+        this.head.prev = null;
+        this.size--;
+        return removedNode;
+    }
+
+    //If the node to remove is the tail
+    if ( this.tail.data === data ) {
+        removedNode = this.tail;
+        this.tail = this.tail.prev;
+        this.tail.next = null;
+        this.size--;
+        return removedNode;
+    }
+
+    //If the node to remove is anywhere in between head and the tail
+    let tempNode = this.head.next;
+    while ( tempNode !== this.tail ) {
+        if ( tempNode.data === data ) {
+            removedNode = tempNode;
+            let tempPrevious = tempNode.prev;
+            let tempNext = tempNode.next;
+            tempPrevious.next = tempNext;
+            tempNext.prev = tempPrevious;
+            tempNode = null;
+            this.size--;
+            return removedNode;
+        }
+        tempNode = tempNode.next;
+    }
+    return null; 
+}
+
+//Doubly Linked List isEmpty.
+DoublyLinkedList.prototype.isEmpty = function() {
+    return this.size === 0;
+}
+
+</code></pre>
+</p>           
+                    </div>
+                </div>
+            </div>
+            </section>
+</p>
+    <footer>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <p id="footer-paragraph">made by aaron | aaron@byshine.net</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<!-- jQuery 3.2.1 -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+</script>
+<!-- Custom JS -->
+<script src="js/app.js"></script>
+<script src="js/prism.js"></script>
+<script>
+(function() {
+
+if (typeof self === 'undefined' || !self.Prism || !self.document) {
+    return;
+}
+
+Prism.hooks.add('complete', function (env) {
+    if (!env.code) {
+        return;
+    }
+
+    // works only for <code> wrapped inside <pre> (not inline)
+    var pre = env.element.parentNode;
+    var clsReg = /\s*\bline-numbers\b\s*/;
+    if (
+        !pre || !/pre/i.test(pre.nodeName) ||
+            // Abort only if nor the <pre> nor the <code> have the class
+        (!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+    ) {
+        return;
+    }
+
+    if (env.element.querySelector(".line-numbers-rows")) {
+        // Abort if line numbers already exists
+        return;
+    }
+
+    if (clsReg.test(env.element.className)) {
+        // Remove the class "line-numbers" from the <code>
+        env.element.className = env.element.className.replace(clsReg, '');
+    }
+    if (!clsReg.test(pre.className)) {
+        // Add the class "line-numbers" to the <pre>
+        pre.className += ' line-numbers';
+    }
+
+    var match = env.code.match(/\n(?!$)/g);
+    var linesNum = match ? match.length + 1 : 1;
+    var lineNumbersWrapper;
+
+    var lines = new Array(linesNum + 1);
+    lines = lines.join('<span></span>');
+
+    lineNumbersWrapper = document.createElement('span');
+    lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+    lineNumbersWrapper.className = 'line-numbers-rows';
+    lineNumbersWrapper.innerHTML = lines;
+
+    if (pre.hasAttribute('data-start')) {
+        pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+    }
+
+    env.element.appendChild(lineNumbersWrapper);
+
+});
+
+}());
+</script>
+</body>
+
+</html>
