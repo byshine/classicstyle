@@ -11,6 +11,13 @@
 	</script><!-- Bootstrap CSS -->
 	<link href="css/bootstrap.css" rel="stylesheet"><!-- Custom CSS -->
 	<link href="css/styles.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("user_PniELls1CV1MEapoCxrbI");
+       })();
+    </script>
 </head>
 <body>
 	
@@ -25,56 +32,67 @@
 						<a class="nav-link" href="resume.html">Resume</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Contact</a>
+						<a class="nav-link" href="contact.html">Contact</a>
 					</li>
 				</ul>
 			</div>
 		</nav>
 
-		<section id="showcase">
+	<section>
+	<div class="container">
 
-			<section id="showcase-header">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-12">
-							<h1 id="showcase-header-title">Showcase</h1>
-						</div>
-					</div>
+		<div class="row text-center">
+			<div class="col-xl-12">
+				<h2>Contact Me</h2>
+			</div>
+		</div>
+		<form>
+		 <div class="row">
+		    <div class="col-xl-12 mt-2">
+		      <label for="firstname">First name</label>
+		      <input type="text" class="form-control is-valid" id="firstname" placeholder="First name" value="" required>
+		    </div>
+		    		  </div>
+		    		  <div class="row mt-2">
+		    <div class="col-xl-12">
+		      <label for="lastname">Last name</label>
+		      <input type="text" class="form-control is-valid" id="lastname" placeholder="Last name" value="" required>
+		    </div>
+		    </div>
 
-					<div class="row">
-						<div class="col-lg-12">
-							<h5 id="showcase-header-quote">It's great to learn, but doing is even better.</h5>
-						</div>
-					</div>
-				</div>
-			</section>
+		    <div class="row mt-2">
+			    <div class="col-xl-12">
+			      <label for="emailform">Email</label>
+			      <input type="email" class="form-control is-valid" id="emailform" placeholder="your@email.com" value="" required>
+			    </div>		    	
+		    </div>
 
-			<section id="showcase-content">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-12">
-							<h4>Websites & Web Applications</h4>
-						</div>
-					</div>
-					<div class="row">
-							<div class="col-lg-12">
-								<h4>Components & Others</h4>
-							</div>
+		    <div class="row mt-2">
+			    <div class="col-xl-12">
+			      <label for="company">Company</label>
+			      <input type="text" class="form-control is-valid" id="company" placeholder="optional" value="">
+			    </div>		    	
+		    </div>
 
-					</div>
-					<div class="row">
-						<div class="col-lg-3">
-							<h5>Flexbox Research</h5>
-							<img src="img/9.jpg" style="width: 100%">
-							<button type="button" class="btn btn-dark">Github</button>
-							<button type="button" class="btn btn-dark">Live</button>
+		    <div class="row mt-2 mb-4">
+			    <div class="col-xl-12">
+				    <label for="message">Message</label>
+				    <textarea class="form-control" id="message" rows="10" required></textarea>
+			    </div>		    	
+		    </div>
 
-						</div>
-					</div>
-				</div>
-			</section>
+ 		 <button class="btn btn-primary" type="submit" id="submitButton">Submit form</button>
+		</form>
+	</div>
 
-		</section>
+	<div class="container">
+		<div class="row mt-4 mb-3">
+			<div class="col-xl-12">
+				<em>If for some reason I don't reach back in a timely fashion, please send me an email at esahn@sfu.ca</em>
+			</div>
+		</div>
+	</div>
+	</section>
 
 
 	<footer>
