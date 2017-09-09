@@ -6,6 +6,22 @@ body {
 
 }
 
+#showcase-content {
+  padding-top: 0;
+}
+
+.project-image {
+padding: 1rem;
+margin-bottom: 1rem;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+       -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
+}
+
+.projectButton {
+  padding: 20px;
+}
+
 .nav-link {
   text-align: center;
   font-size: 1.4rem;
