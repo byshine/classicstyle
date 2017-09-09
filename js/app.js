@@ -13,4 +13,13 @@ $("form").submit( function( event ) {
 		company: company_form,
 		message: message_form
 	});
+
+	$("#firstname").val("");
+	$("#lastname").val("");
+	$("#emailform").val("");
+	$("#company").val("");
+	$("#message").val("");
+	window.scrollTo(0, 0);
+	alert("Thanks! I will get back to you soon as possible!");
+
 });
