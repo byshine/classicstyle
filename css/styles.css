@@ -314,6 +314,18 @@ footer {
     text-align: center !important;
   }
 
+  #showcase {
+    text-align: center !important;
+  }
+
+  #showcase-header {
+    padding: 0;
+  }
+
+  #showcase-content {
+    padding: 0;
+  }
+
   #resume-education h5 {
     margin-top: 1rem;
   }
