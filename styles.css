@@ -1,0 +1,459 @@
+body {
+  font-family: 'Oswald', sans-serif;
+}
+
+.container-fluid {
+
+}
+
+#showcase-content {
+  padding-top: 0;
+}
+
+.project-image {
+padding: 1rem;
+margin-bottom: 1rem;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+       -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
+}
+
+.projectButton {
+  padding: 20px;
+}
+
+.nav-link {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+header {
+  padding: 140px;
+}
+
+section {
+  padding: 60px;
+}
+
+#header-content-name {
+  font-size: 3.5rem;
+}
+
+#header-content-description {
+  font-size: 2rem;
+}
+
+.header-content-divider {
+  margin: 0;
+  margin-top : 5px;
+  margin-bottom: 5px;
+  width: 65%;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#header-content {
+  color: white;
+}
+
+#header-content-image {
+  border-radius: 75%;
+  background-position: center center;
+  background-size: cover;
+  -webkit-box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.75);
+}
+
+#header-content-paragraph {
+  letter-spacing: 0.0.5rem;
+  text-align: justify;
+  font-size: 1.1rem;
+  width: 65%;
+  opacity: 0.9;
+}
+
+#header-content-socialmedialist {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 65%;
+  text-align: center;
+}
+
+#header-content-socialmedialist>li {
+  display: inline-block;
+  padding: 15px;
+}
+
+.devicon-inspiration {
+  font-size: 5rem;
+}
+
+.aboutme-image {
+  display: block;
+  width:  400px;
+  height: auto;
+}
+
+#aboutme-softskills-list {
+  text-align: center;
+  margin: 0;
+  margin-top: 2rem;
+  padding: 5px;
+  list-style-type: none;
+  width: 100%;
+}
+
+#aboutme-softskills-list>li {
+ display: inline-block;
+ width: 20%;
+}
+
+#aboutme-softskills-list>li>h5 {
+  margin-top: 10px;
+}
+
+#aboutme-paragraph {
+  font-size: 1.1rem;
+  text-align: justify;
+}
+
+
+footer {
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+#footer-paragraph {
+  margin: 0;
+  padding: 10px;
+}
+
+#skills {
+  text-align: center;
+}
+
+#skills-header {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.skills-column {
+  padding: 15px;
+}
+.skills-devicon {
+  font-size: 6rem;
+}
+
+#showcase-title {
+  margin : 0;
+  padding: 0;
+  margin-bottom: 50px;
+  color: white;
+  display: inline-block;
+}
+
+#showcase-viewmore {
+  display: inline-block;
+  color: white;
+}
+
+.showcase-card {
+  padding: 20px;
+}
+
+.showcase-card>img {
+   -webkit-box-shadow: inset 0px 0px 24px 4px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset 0px 0px 24px 4px rgba(0,0,0,0.75);
+  box-shadow: inset 0px 0px 24px 4px rgba(0,0,0,0.75); 
+}
+
+.showcase-row {
+  padding: 60px;
+}
+
+.badge {
+  font-size: 1.1rem;
+  letter-spacing: 0.05rem;
+  font-weight: normal;
+}
+
+.full-background-image {
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+  -webkit-box-shadow: inset 0px 0px 24px 4px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset 0px 0px 24px 4px rgba(0,0,0,0.75);
+  box-shadow: inset 0px 0px 24px 4px rgba(0,0,0,0.75);
+}
+
+#resume-socialmedialist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#resume-socialmedialist>li {
+  display: inline-block;
+  padding: 1rem;
+  color: #138496;
+}
+
+.resume-experience {
+  margin-top: 2rem;
+}
+
+.resume-section-title {
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+.resume-experience-location {
+}
+
+.resume-experience-content-position {
+  font-size: 1.1rem;
+}
+
+.resume-experience-skillsbadge {
+  background-color : #138496;
+  margin: 0.1rem;
+  margin-left: 0;
+}
+
+.resume-experience-content-skills {
+  margin-bottom: 1rem;
+}
+
+#resume-projects,
+#resume-education,
+#resume-skills {
+  padding : 0;
+  margin-top: 2rem;
+}
+
+.skill-progress {
+  width: 25%;
+  display: inline-block;
+}
+
+.card-text {
+  
+}
+
+.badge-skill {
+  font-size: 0.82rem;
+}
+
+#resume-skills h3 {
+  margin-bottom: 2rem;
+}
+
+/*
+  Media Queries
+*/
+
+@media (max-width: 1199px) {
+
+  .resume-experience-content {
+    margin-top: 1rem;
+  }
+  #resume-skills .card {
+    margin: 0.5rem;
+  }
+
+  #resume-skills .skills-devicon {
+    font-size: 6rem;
+  }
+
+ .aboutme-resumeButton {
+  margin-bottom: 1.5rem;
+ }
+
+ .showcase-card {
+  width: 100% !important;
+ } 
+
+ .showcase {
+  padding: 0.5rem;
+ }
+
+  #header-content-paragraph {
+    margin-top: 1rem;
+    opacity: 1;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .header-content-divider {
+    width: 100%;
+  }
+
+  #header-content>div {
+    justify-content: center !important;
+  }
+
+  #aboutme {
+    text-align: center;
+  }
+
+  .showcase {
+    padding: 0.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 991px) {
+  .resume-experience h4 {
+    text-align: center !important;
+  }
+
+  #showcase {
+    text-align: center !important;
+  }
+
+  #showcase-header {
+    padding: 0;
+  }
+
+  #showcase-content {
+    padding: 0;
+  }
+
+  #resume-education h5 {
+    margin-top: 1rem;
+  }
+
+  .resume-experience-content-skills .resume-experience-skillsbadge {
+    font-size: 0.9rem;
+  }
+
+  .resume-experience-content-outline h5 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+
+ #resume-socialmedialist i {
+  font-size: 2.5rem;
+ }
+
+  #resume-projects p {
+    text-align: center;
+  }
+
+  #resume-projects .resume-section-title {
+    margin-bottom: 2rem;
+  }
+
+  .resume-section-title {
+    text-align: center !important;
+  }
+  header {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  section {
+    padding: 0;
+    padding-top: 2rem;
+  }
+
+  #header-content>div {
+    justify-content: center !important;
+  }
+
+  .header-content-divider {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+#header-content-name {
+  margin-top: 1rem;
+}
+  
+  #header-content-name,
+  #header-content-description {
+    font-size: 3rem;
+  }
+
+  #header-content-paragraph {
+    margin-top: 1rem;
+    opacity: 1;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  #header-content-socialmedialist {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  #header-content-socialmedialist>li {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  #aboutme {
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  #aboutme-header {
+    margin-top: 1rem;
+  }
+
+  #aboutme-softskills-list {
+    margin-top: 1rem;
+  }
+
+  #aboutme-softskills-list>li {
+    width: 23;
+  }
+
+  #aboutme-softskills-list>li>h5 {
+    font-size: 1rem;
+  }
+
+  .showcase {
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .showcase-row {
+    padding: 0;
+  }
+
+  #showcase-title {
+    margin-top: 1rem;
+  }
+  
+
+  .showcase-card {
+    width: 100% !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-project-skills {
+    font-size: 0.8rem;
+  }
+
+  .badge-project-button {
+    font-size: 0.8rem;
+  }
+
+  .skills-devicon {
+    font-size: 3rem;
+  }
+
+  #skills {
+    padding: 1rem;
+  }
+}
