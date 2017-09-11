@@ -64,6 +64,11 @@ section {
   box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.75);
 }
 
+#showcase-title,
+#showcase-viewmore a {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
 #header-content-paragraph {
   letter-spacing: 0.0.5rem;
   text-align: justify;
